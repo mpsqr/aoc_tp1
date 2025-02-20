@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS=-O2 -g -Wall
-OPTFLAGS=-O3 -g -Wall
+CFLAGS=-O2 -g -Wall -march=native
+OPTFLAGS=-O3 -g -Wall -march=native
 OBJS_COMMON=kernel.o rdtsc.o
 
 all:	check calibrate measure
