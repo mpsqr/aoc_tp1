@@ -7,15 +7,15 @@
 extern uint64_t rdtsc ();
 
 // TODO: adjust for each kernel
-extern void kernel (unsigned n , double a[n][n] , const float b[n] , const float c[n]);
+extern void kernel (unsigned n , double *a , const float b[n] , const float c[n]);
 
 // TODO: adjust for each kernel
-static void init_array (int n, double a[n][n]) {
+static void init_array (int n, double *a) {
    int i, j;
 
    for (i=0; i<n; i++)
       for (j=0; j<n; j++)
-         a[i][j] = (double) rand() / RAND_MAX;
+         a[i*n + j] = (double) rand() / RAND_MAX;
 }
 
 static void init_array_1d (int n, float b[n]) {
@@ -56,7 +56,7 @@ int main (int argc, char *argv[]) {
       unsigned i;
 
       /* allocate arrays. TODO: adjust for each kernel */
-      double (*a)[size] = malloc(size * size * sizeof(double));
+      double **a = malloc(size * size * sizeof(double));
       float *b = malloc(size * sizeof(float));
       float *c = malloc(size * sizeof(float));
 
@@ -88,7 +88,7 @@ int main (int argc, char *argv[]) {
       free (c);
    }
 
-   const unsigned nb_inner_iters = repm * (size * size * size); // TODO adjust for each kernel
+   const unsigned nb_inner_iters = repm * (size * size); // TODO adjust for each kernel
    qsort (tdiff, NB_METAS, sizeof tdiff[0], cmp_uint64);
 
    // Minimum value: should be at least 2000 RDTSC-cycles

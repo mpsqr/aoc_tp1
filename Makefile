@@ -20,7 +20,7 @@ driver.o: driver.c
 	$(CC) $(CFLAGS) -c $<
 
 kernel.o: kernel.c
-	$(CC) $(CFLAGS) $(if $(OPT),-D $(OPT)) -c $< -o $@
+	$(CC) $(OPTFLAGS) $(if $(OPT),-D $(OPT)) -c $< -o $@
 
 
 
